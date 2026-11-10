@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8b75b32cadc9d40b8e5230b4217cb9, type: 3}
+  m_Name: Item_GlassBottle_01
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
+  _displayName: "\u0421\u0442\u0435\u043A\u043B\u044F\u043D\u043D\u0430\u044F \u0431\u0443\u0442\u044B\u043B\u043A\u0430"
+  _itemCategory: 0
+  _uiIcon: {fileID: 21300000, guid: d6e51c43158e357b0972cbd5b69a3d2f, type: 3}
+  _worldPrefab: {fileID: 3613718199928060905, guid: 9b5dc512ec347e34eaaae1f9cf497537, type: 3}
+  _weight: 1
+  _maxStack: 8
+  _pickupMode: 0
+  _disassembleResults: []

@@ -1,0 +1,4 @@
+<!-- UNITY CODE ASSIST INSTRUCTIONS START -->
+- Project name: BagLogic
+- Unity version: Unity 6000.3.21f1
+<!-- UNITY CODE ASSIST INSTRUCTIONS END -->
