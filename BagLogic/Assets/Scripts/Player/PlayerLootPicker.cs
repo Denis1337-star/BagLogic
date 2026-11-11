@@ -4,22 +4,23 @@ public class PlayerLootPicker : MonoBehaviour
 {
     [SerializeField] private PlayerInventory _playerInventory;
     [SerializeField] private PlayerInteractInput _interactInput;
+    [SerializeField] private HudMessageHud _hudMessageHud;
+    [SerializeField] private PickupPromptView _pickupPromptView;
 
     [Header("Scan")]
     [SerializeField] private LayerMask _lootMask;
     [SerializeField] private float _autoPickupRadius = 1.5f;
     [SerializeField] private float _manualPickupRadius = 2.5f;
-    [SerializeField] private int _maxHits = 16;
+    [SerializeField] private int _maxOverlapResults = 16;
 
     LootPickup _lootPickup;
 
     void Start()
     {
-        LootScanner autoScanner = new LootScanner(transform, _autoPickupRadius, _lootMask, _maxHits);
-        LootScanner manualScanner = new LootScanner(transform, _manualPickupRadius, _lootMask, _maxHits);
-        _lootPickup = new LootPickup(_playerInventory.Inventory, autoScanner, manualScanner, _maxHits);
+        LootScanner autoScanner = new LootScanner(transform, _autoPickupRadius, _lootMask, _maxOverlapResults);
+        LootScanner manualScanner = new LootScanner(transform, _manualPickupRadius, _lootMask, _maxOverlapResults);
+        _lootPickup = new LootPickup(_playerInventory.Inventory, autoScanner, manualScanner, _maxOverlapResults);
         _lootPickup.PickupFailed += OnPickupFailed;
-        _lootPickup.PickupSucceeded += OnPickupSucceeded;
     }
 
     void OnEnable()
@@ -38,7 +39,6 @@ public class PlayerLootPicker : MonoBehaviour
             return;
 
         _lootPickup.PickupFailed -= OnPickupFailed;
-        _lootPickup.PickupSucceeded -= OnPickupSucceeded;
     }
 
     void Update()
@@ -46,7 +46,13 @@ public class PlayerLootPicker : MonoBehaviour
         if (_lootPickup == null)
             return;
 
-        _lootPickup.TickAutomatic();
+        _lootPickup.TickAutomaticPickups();
+
+        LootWorldItem manualLootWorldItem = _lootPickup.GetClosestManualLoot();
+        if (manualLootWorldItem != null)
+            _pickupPromptView.ShowForItem(manualLootWorldItem.ItemConfig.DisplayName);
+        else
+            _pickupPromptView.Hide();
     }
 
     void OnInteractPressed()
@@ -54,19 +60,15 @@ public class PlayerLootPicker : MonoBehaviour
         if (_lootPickup == null)
             return;
 
-        _lootPickup.TryManualInteract();
+        _lootPickup.TryPickupClosestManual();
     }
 
     void OnPickupFailed(InventoryAddFailReason reason)
     {
         if (reason == InventoryAddFailReason.ExceedsWeight)
-            Debug.Log("Не влезает по весу");
+            _hudMessageHud.Message.Show("Не влезает по весу");
         else
-            Debug.Log($"Подбор не удался: {reason}");
+            _hudMessageHud.Message.Show("Не удалось подобрать");
     }
 
-    void OnPickupSucceeded(ItemDefinition item, int amount)
-    {
-        Debug.Log($"Подобрано: {item.DisplayName} x{amount}");
-    }
 }

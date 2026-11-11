@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class Inventory
 {
-    readonly List<InventorySlot> _slots = new List<InventorySlot>(32);
+    readonly List<InventorySlot> _inventorySlots = new List<InventorySlot>(32);
     readonly float _maxWeight;
 
     public Inventory(float maxWeight)
@@ -14,35 +14,35 @@ public class Inventory
     public float MaxWeight => _maxWeight;
     public float CurrentWeight { get; private set; }
     public float RemainingWeight => _maxWeight - CurrentWeight;
-    public IReadOnlyList<InventorySlot> Slots => _slots;
+    public IReadOnlyList<InventorySlot> InventorySlots => _inventorySlots;
 
     public event Action InventoryChanged;
 
-    public InventoryAddResult TryAdd(ItemDefinition item, int amount)
+    public InventoryAddResult TryAdd(ItemDefinition itemConfig, int amount)
     {
-        if (item == null)
+        if (itemConfig == null)
             return InventoryAddResult.Failed(InventoryAddFailReason.NullItem);
 
         if (amount <= 0)
             return InventoryAddResult.Failed(InventoryAddFailReason.InvalidAmount);
 
-        float addWeight = item.Weight * amount;
+        float addWeight = itemConfig.Weight * amount;
         if (addWeight > RemainingWeight)
             return InventoryAddResult.Failed(InventoryAddFailReason.ExceedsWeight);
 
         int remainingAmount = amount;
-        for (int i = 0; i < _slots.Count; i++)
+        for (int i = 0; i < _inventorySlots.Count; i++)
         {
-            InventorySlot slot = _slots[i];
-            if (slot.Item != item || slot.IsFull)
+            InventorySlot inventorySlot = _inventorySlots[i];
+            if (inventorySlot.ItemConfig != itemConfig || inventorySlot.IsFull)
                 continue;
 
-            int canPut = slot.FreeSpace;
-            if (canPut > remainingAmount)
-                canPut = remainingAmount;
+            int amountToPlace = inventorySlot.RemainingStackSpace;
+            if (amountToPlace > remainingAmount)
+                amountToPlace = remainingAmount;
 
-            slot.AddCount(canPut);
-            remainingAmount -= canPut;
+            inventorySlot.AddCount(amountToPlace);
+            remainingAmount -= amountToPlace;
             if (remainingAmount == 0)
                 break;
         }
@@ -50,10 +50,10 @@ public class Inventory
         while (remainingAmount > 0)
         {
             int stackCount = remainingAmount;
-            if (stackCount > item.MaxStack)
-                stackCount = item.MaxStack;
+            if (stackCount > itemConfig.MaxStack)
+                stackCount = itemConfig.MaxStack;
 
-            _slots.Add(new InventorySlot(item, stackCount));
+            _inventorySlots.Add(new InventorySlot(itemConfig, stackCount));
             remainingAmount -= stackCount;
         }
 
@@ -62,19 +62,19 @@ public class Inventory
         return InventoryAddResult.Succeeded(amount);
     }
 
-    public bool TryRemove(ItemDefinition item, int amount)
+    public bool TryRemove(ItemDefinition itemConfig, int amount)
     {
-        if (item == null || amount < 0)
+        if (itemConfig == null || amount < 0)
             return false;
 
-        if (CountOf(item) < amount)
+        if (CountOf(itemConfig) < amount)
             return false;
 
         int remainingAmount = amount;
-        for (int i = _slots.Count - 1; i >= 0 && remainingAmount > 0; i--)
+        for (int i = _inventorySlots.Count - 1; i >= 0 && remainingAmount > 0; i--)
         {
-            InventorySlot slot = _slots[i];
-            if (slot.Item != item)
+            InventorySlot slot = _inventorySlots[i];
+            if (slot.ItemConfig != itemConfig)
                 continue;
 
             int take = slot.Count;
@@ -83,23 +83,23 @@ public class Inventory
 
             slot.RemoveCount(take);
             remainingAmount -= take;
-            CurrentWeight -= item.Weight * take;
+            CurrentWeight -= itemConfig.Weight * take;
 
             if (slot.Count <= 0)
-                _slots.RemoveAt(i);
+                _inventorySlots.RemoveAt(i);
         }
 
         InventoryChanged?.Invoke();
         return true;
     }
 
-    public int CountOf(ItemDefinition item)
+    public int CountOf(ItemDefinition itemConfig)
     {
         int total = 0;
-        for (int i = 0; i < _slots.Count; i++)
+        for (int i = 0; i < _inventorySlots.Count; i++)
         {
-            if (_slots[i].Item == item)
-                total += _slots[i].Count;
+            if (_inventorySlots[i].ItemConfig == itemConfig)
+                total += _inventorySlots[i].Count;
         }
         return total;
     }

@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class LootWorldItem : MonoBehaviour
 {
-    [SerializeField] private ItemDefinition _item;
+    [SerializeField] private ItemDefinition _itemConfig;
     [SerializeField] private int _amount = 1;
 
-    public ItemDefinition Item => _item;
+    public ItemDefinition ItemConfig => _itemConfig;
     public int Amount => _amount;
     public bool IsAvailable
     {
         get
         {
-            if (_item == null)
+            if (_itemConfig == null)
                 return false;
 
             if (_amount <= 0)
@@ -24,7 +24,7 @@ public class LootWorldItem : MonoBehaviour
         }
     }
 
-    public void Consume()
+    public void Despawn()
     {
         _amount = 0;
         Destroy(gameObject);

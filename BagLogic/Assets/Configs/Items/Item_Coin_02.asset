@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8b75b32cadc9d40b8e5230b4217cb9, type: 3}
   m_Name: Item_Coin_02
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
-  _displayName: "\u041C\u043E\u043D\u0435\u0442\u0430 B"
+  _displayName: "\u041C\u043E\u043D\u0435\u0442\u0430"
   _itemCategory: 2
-  _uiIcon: {fileID: 21300000, guid: af286895d949135a14c193e5445deb1f, type: 3}
+  _iconSprite: {fileID: 21300000, guid: af286895d949135a14c193e5445deb1f, type: 3}
   _worldPrefab: {fileID: 5583695742079069958, guid: 779c5ca3c923f0e4386e047e98dfb46d, type: 3}
   _weight: 1
   _maxStack: 50

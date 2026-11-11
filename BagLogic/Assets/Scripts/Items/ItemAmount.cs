@@ -2,6 +2,6 @@
 [System.Serializable]
 public struct ItemAmount
 {
-    public ItemDefinition Item;
+    public ItemDefinition ItemConfig;
     public int Amount;
 }

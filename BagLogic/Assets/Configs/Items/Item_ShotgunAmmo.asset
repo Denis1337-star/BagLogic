@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8b75b32cadc9d40b8e5230b4217cb9, type: 3}
   m_Name: Item_ShotgunAmmo
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
-  _displayName: "\u041F\u0430\u0442\u0440\u043E\u043D\u044B (\u0434\u0440\u043E\u0431\u044C)"
+  _displayName: "\u041F\u0430\u0442\u0440\u043E\u043D\u044B"
   _itemCategory: 0
-  _uiIcon: {fileID: 21300000, guid: 3532af9299a4f767863a3feda39eb00e, type: 3}
+  _iconSprite: {fileID: 21300000, guid: 3532af9299a4f767863a3feda39eb00e, type: 3}
   _worldPrefab: {fileID: 2025177721934321285, guid: 12842fae3acb9e54eb20b7d1055e9069, type: 3}
   _weight: 1
   _maxStack: 40

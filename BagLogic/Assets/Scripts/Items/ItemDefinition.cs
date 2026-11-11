@@ -3,10 +3,9 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Game/Items/Item Definition", fileName = "Item_")]
 public class ItemDefinition : ScriptableObject
 {
-    [Header("Identity")]
     [SerializeField] private string _displayName;
     [SerializeField] private ItemCategory _itemCategory;
-    [SerializeField] private Sprite _uiIcon;
+    [SerializeField] private Sprite _iconSprite;
     [SerializeField] private GameObject _worldPrefab;
 
     [Header("Inventory")]
@@ -18,8 +17,8 @@ public class ItemDefinition : ScriptableObject
     [SerializeField] private ItemAmount[] _disassembleResults;
 
     public string DisplayName => _displayName;
-    public ItemCategory Category => _itemCategory;
-    public Sprite Icon => _uiIcon;
+    public ItemCategory ItemCategory => _itemCategory;
+    public Sprite IconSprite => _iconSprite;
     public GameObject WorldPrefab => _worldPrefab;
     public float Weight => _weight;
     public int MaxStack => _maxStack;

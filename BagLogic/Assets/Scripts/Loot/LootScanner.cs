@@ -2,61 +2,61 @@ using UnityEngine;
 
 public class LootScanner
 {
-    readonly Transform _origin;
+    readonly Transform _originTransform;
     readonly float _radius;
     readonly LayerMask _lootMask;
-    readonly Collider[] _hits;
+    readonly Collider[] _maxOverlapResults;
 
-    public LootScanner(Transform origin, float radius, LayerMask lootMask, int maxHits)
+    public LootScanner(Transform originTransform, float radius, LayerMask lootMask, int maxOverlapResults)
     {
-        _origin = origin;
+        _originTransform = originTransform;
         _radius = radius;
         _lootMask = lootMask;
-        _hits = new Collider[maxHits];
+        _maxOverlapResults = new Collider[maxOverlapResults];
     }
 
-    public int Collect(LootWorldItem[] results)
+    public int Collect(LootWorldItem[] resultsLootWorldItem)
     {
-        int hitCount = Physics.OverlapSphereNonAlloc(_origin.position, _radius, _hits, _lootMask);
+        int hitCount = Physics.OverlapSphereNonAlloc(_originTransform.position, _radius, _maxOverlapResults, _lootMask);
         int resultCount = 0;
 
         for (int i = 0; i < hitCount; i++)
         {
-            LootWorldItem loot = _hits[i].GetComponentInParent<LootWorldItem>();
-            if (loot == null || !loot.IsAvailable)
+            LootWorldItem lootWorldItem = _maxOverlapResults[i].GetComponent<LootWorldItem>();
+            if (lootWorldItem == null || !lootWorldItem.IsAvailable)
                 continue;
 
-            if (resultCount >= results.Length)
+            if (resultCount >= resultsLootWorldItem.Length)
                 break;
 
-            results[resultCount] = loot;
+            resultsLootWorldItem[resultCount] = lootWorldItem;
             resultCount++;
         }
 
         return resultCount;
     }
 
-    public LootWorldItem FindClosest(LootWorldItem[] buffer, PickupMode mode)
+    public LootWorldItem FindClosest(LootWorldItem[] bufferLootWorldItem, PickupMode pickupMode)
     {
-        int count = Collect(buffer);
-        LootWorldItem closest = null;
-        float bestSqr = float.MaxValue;
-        Vector3 origin = _origin.position;
+        int count = Collect(bufferLootWorldItem);
+        LootWorldItem closestLootWorldItem = null;
+        float best = float.MaxValue;
+        Vector3 originTransform = _originTransform.position;
 
         for (int i = 0; i < count; i++)
         {
-            LootWorldItem loot = buffer[i];
-            if (loot.Item.PickupMode != mode)
+            LootWorldItem loot = bufferLootWorldItem[i];
+            if (loot.ItemConfig.PickupMode != pickupMode)
                 continue;
 
-            float sqr = (loot.transform.position - origin).sqrMagnitude;
-            if (sqr >= bestSqr)
+            float sqr = (loot.transform.position - originTransform).sqrMagnitude;
+            if (sqr >= best)
                 continue;
 
-            bestSqr = sqr;
-            closest = loot;
+            best = sqr;
+            closestLootWorldItem = loot;
         }
 
-        return closest;
+        return closestLootWorldItem;
     }
 }

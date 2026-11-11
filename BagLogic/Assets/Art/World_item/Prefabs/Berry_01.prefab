@@ -126,5 +126,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 482f78e9e7d8c0a49bdce9a173841c87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LootWorldItem
-  _item: {fileID: 0}
+  _itemConfig: {fileID: 11400000, guid: 784dc3e7ec828e2d5a5ac3eba74e809a, type: 2}
   _amount: 1

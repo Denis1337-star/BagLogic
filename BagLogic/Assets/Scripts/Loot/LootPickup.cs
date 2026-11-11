@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 public class LootPickup
 {
@@ -25,40 +24,44 @@ public class LootPickup
         _manualBuffer = new LootWorldItem[bufferSize];
     }
 
-    public void TickAutomatic()
+    public void TickAutomaticPickups()
     {
         int count = _autoScanner.Collect(_autoBuffer);
         for (int i = 0; i < count; i++)
         {
-            LootWorldItem loot = _autoBuffer[i];
-            if (loot.Item.PickupMode != PickupMode.Automatic)
+            LootWorldItem lootWorldItem = _autoBuffer[i];
+            if (lootWorldItem.ItemConfig.PickupMode != PickupMode.Automatic)
                 continue;
 
-            TryPickup(loot);
+            TryPickup(lootWorldItem);
         }
     }
 
-    public void TryManualInteract()
+    public void TryPickupClosestManual()
     {
-        LootWorldItem loot = _manualScanner.FindClosest(_manualBuffer, PickupMode.Manual);
-        if (loot == null)
+        LootWorldItem lootWorldItem = _manualScanner.FindClosest(_manualBuffer, PickupMode.Manual);
+        if (lootWorldItem == null)
             return;
 
-        TryPickup(loot);
+        TryPickup(lootWorldItem);
     }
 
-    void TryPickup(LootWorldItem loot)
+    void TryPickup(LootWorldItem lootWorldItem)
     {
-        InventoryAddResult result = _inventory.TryAdd(loot.Item, loot.Amount);
+        InventoryAddResult result = _inventory.TryAdd(lootWorldItem.ItemConfig, lootWorldItem.Amount);
         if (!result.Success)
         {
             PickupFailed?.Invoke(result.FailReason);
             return;
         }
 
-        ItemDefinition item = loot.Item;
-        int amount = loot.Amount;
-        loot.Consume();
-        PickupSucceeded?.Invoke(item, amount);
+        ItemDefinition itemConfig = lootWorldItem.ItemConfig;
+        int amount = lootWorldItem.Amount;
+        lootWorldItem.Despawn();
+        PickupSucceeded?.Invoke(itemConfig, amount);
+    }
+    public LootWorldItem GetClosestManualLoot()
+    {
+        return _manualScanner.FindClosest(_manualBuffer, PickupMode.Manual);
     }
 }

@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   _displayName: "\u041D\u043E\u0436"
   _itemCategory: 3
-  _uiIcon: {fileID: 21300000, guid: a184dd6cf69bcfca193edcc0eb987c0d, type: 3}
+  _iconSprite: {fileID: 21300000, guid: a184dd6cf69bcfca193edcc0eb987c0d, type: 3}
   _worldPrefab: {fileID: 5413897366675893324, guid: 792ffbaca1a37e74eb298f7b4917c198, type: 3}
   _weight: 1
   _maxStack: 1
   _pickupMode: 1
-  _disassembleResults: []
+  _disassembleResults:
+  - ItemConfig: {fileID: 11400000, guid: ad99740336e7eb1f1ac2fc70889cc3c6, type: 2}
+    Amount: 1

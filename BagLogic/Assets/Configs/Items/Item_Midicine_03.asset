@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   _displayName: "\u0410\u043C\u043F\u0443\u043B\u0430"
   _itemCategory: 0
-  _uiIcon: {fileID: 21300000, guid: 40007be441a42cacefc7df0552472b0b, type: 3}
+  _iconSprite: {fileID: 21300000, guid: 40007be441a42cacefc7df0552472b0b, type: 3}
   _worldPrefab: {fileID: 2737406151703273568, guid: f9681f6619c8deb4680d09055c8b9983, type: 3}
   _weight: 1
   _maxStack: 10
