@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8b75b32cadc9d40b8e5230b4217cb9, type: 3}
+  m_Name: Item_Screwdriver
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
+  _displayName: "\u041E\u0442\u0432\u0451\u0440\u0442\u043A\u0430"
+  _itemCategory: 1
+  _uiIcon: {fileID: 21300000, guid: 5029c9e940e6f9c50b33106c89f2d850, type: 3}
+  _worldPrefab: {fileID: 3056923512429148215, guid: 613e683749e21ec4998c159af31b55c4, type: 3}
+  _weight: 1
+  _maxStack: 5
+  _pickupMode: 1
+  _disassembleResults: []
