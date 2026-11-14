@@ -35,17 +35,11 @@ public class PlayerLootPicker : MonoBehaviour
 
     void OnDestroy()
     {
-        if (_lootPickup == null)
-            return;
-
         _lootPickup.PickupFailed -= OnPickupFailed;
     }
 
     void Update()
     {
-        if (_lootPickup == null)
-            return;
-
         _lootPickup.TickAutomaticPickups();
 
         LootWorldItem manualLootWorldItem = _lootPickup.GetClosestManualLoot();
@@ -57,9 +51,6 @@ public class PlayerLootPicker : MonoBehaviour
 
     void OnInteractPressed()
     {
-        if (_lootPickup == null)
-            return;
-
         _lootPickup.TryPickupClosestManual();
     }
 

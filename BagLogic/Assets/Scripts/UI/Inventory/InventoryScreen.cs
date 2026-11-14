@@ -47,6 +47,9 @@ public class InventoryScreen : MonoBehaviour
             _playerInput.enabled = enabled;
 
         Cursor.visible = !enabled;
-        Cursor.lockState = enabled ? CursorLockMode.Locked : CursorLockMode.None;
+        if (enabled)
+            Cursor.lockState = CursorLockMode.Locked;
+        else
+            Cursor.lockState = CursorLockMode.None;
     }
 }

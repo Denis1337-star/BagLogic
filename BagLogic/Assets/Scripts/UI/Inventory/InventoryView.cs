@@ -33,10 +33,6 @@ public class InventoryView : MonoBehaviour, IInventoryView
         _weightText.text = $"{Mathf.CeilToInt(current)}/{Mathf.CeilToInt(max)}";
     }
 
-    public void SetSlotCount(int count)
-    {
-        //  сетка уже создана в BuildSlots
-    }
 
     public void BindSlot(int index, ItemDefinition itemConfig, int amount, bool canDisassemble)
     {

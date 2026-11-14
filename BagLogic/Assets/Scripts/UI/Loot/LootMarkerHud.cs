@@ -19,17 +19,17 @@ public class LootMarkerHud : MonoBehaviour
         if (_camera == null)
             _camera = Camera.main;
 
-        LootMarkerView[] markers = new LootMarkerView[_maxMarkers];
+        LootMarkerView[] markersLootView = new LootMarkerView[_maxMarkers];
         for (int i = 0; i < _maxMarkers; i++)
         {
-            LootMarkerView marker = Object.Instantiate(_markerPrefab, _markersRoot);
-            marker.Hide();
-            markers[i] = marker;
+            LootMarkerView markerLootView = Object.Instantiate(_markerPrefab, _markersRoot);
+            markerLootView.Hide();
+            markersLootView[i] = markerLootView;
         }
 
         LootScanner lootScanner = new LootScanner(_playerTransform, _markerRadius, _lootMask, _maxMarkers);
         LootWorldItem[] bufferLootWorldItem = new LootWorldItem[_maxMarkers];
-        _lootMarkerPresenter = new LootMarkerPresenter(_camera, lootScanner, bufferLootWorldItem, markers, _markerRadius);
+        _lootMarkerPresenter = new LootMarkerPresenter(_camera, lootScanner, bufferLootWorldItem, markersLootView, _markerRadius);
     }
 
     void LateUpdate()

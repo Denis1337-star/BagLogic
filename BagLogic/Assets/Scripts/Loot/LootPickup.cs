@@ -48,10 +48,10 @@ public class LootPickup
 
     void TryPickup(LootWorldItem lootWorldItem)
     {
-        InventoryAddResult result = _inventory.TryAdd(lootWorldItem.ItemConfig, lootWorldItem.Amount);
-        if (!result.Success)
+        InventoryAddResult resultInventoryAdd = _inventory.TryAdd(lootWorldItem.ItemConfig, lootWorldItem.Amount);
+        if (!resultInventoryAdd.Success)
         {
-            PickupFailed?.Invoke(result.FailReason);
+            PickupFailed?.Invoke(resultInventoryAdd.FailReason);
             return;
         }
 

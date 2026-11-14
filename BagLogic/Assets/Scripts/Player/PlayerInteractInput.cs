@@ -10,9 +10,6 @@ public class PlayerInteractInput : MonoBehaviour
 
     void Awake()
     {
-        if (_interactAction == null)
-            _interactAction = new InputAction(name: "Interact", type: InputActionType.Button);
-
         if (_interactAction.bindings.Count == 0)
             _interactAction.AddBinding("<Keyboard>/e");
     }

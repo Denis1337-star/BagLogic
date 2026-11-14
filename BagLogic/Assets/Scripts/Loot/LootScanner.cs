@@ -45,16 +45,16 @@ public class LootScanner
 
         for (int i = 0; i < count; i++)
         {
-            LootWorldItem loot = bufferLootWorldItem[i];
-            if (loot.ItemConfig.PickupMode != pickupMode)
+            LootWorldItem lootWorldItem = bufferLootWorldItem[i];
+            if (lootWorldItem.ItemConfig.PickupMode != pickupMode)
                 continue;
 
-            float sqr = (loot.transform.position - originTransform).sqrMagnitude;
+            float sqr = (lootWorldItem.transform.position - originTransform).sqrMagnitude;
             if (sqr >= best)
                 continue;
 
             best = sqr;
-            closestLootWorldItem = loot;
+            closestLootWorldItem = lootWorldItem;
         }
 
         return closestLootWorldItem;
